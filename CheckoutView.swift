@@ -54,6 +54,8 @@ struct CheckoutView: View {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
+                self.confirmationMessage = "There is some problems with internet connection"
+                self.showingConfirmation = true
                 print("No data in response: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
@@ -62,6 +64,8 @@ struct CheckoutView: View {
                 self.confirmationMessage = "Your order for \(decodedOrder.quantity)x \(Order.types[decodedOrder.type].lowercased()) cupcakes is on its way"
                 self.showingConfirmation = true
             } else {
+                self.confirmationMessage = "There is some problems with internet connection"
+                self.showingConfirmation = true
                 print("Invalid response from server")
             }
         }.resume()
